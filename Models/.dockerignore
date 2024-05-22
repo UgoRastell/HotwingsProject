@@ -1,0 +1,16 @@
+﻿**/.classpath
+**/.dockerignore
+**/.env
+**/.git
+**/.gitignore
+**/.project
+**/.settings
+**/.toolstarget
+**/*.md
+**/bin
+**/obj
+**/out
+**/Properties
+
+# Exclure le dossier scraper
+scraper/
