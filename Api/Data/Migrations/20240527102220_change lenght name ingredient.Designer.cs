@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Api.Data.Migrations
 {
     [DbContext(typeof(DatabaseContext))]
-    [Migration("20240504140356_Initial")]
-    partial class Initial
+    [Migration("20240527102220_change lenght name ingredient")]
+    partial class changelenghtnameingredient
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

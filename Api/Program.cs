@@ -21,6 +21,18 @@ builder.WebHost.UseUrls("http://*:80");
 
 var app = builder.Build();
 
+var useMongoDb = builder.Configuration.GetValue<bool>("UseMongoDb");
+
+if (!useMongoDb)
+{
+    using (var scope = app.Services.CreateScope())
+    {
+        var dbContext = scope.ServiceProvider.GetRequiredService<DatabaseContext>();
+        dbContext.Database.Migrate();
+    }
+}
+
+
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
@@ -28,7 +40,7 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
-app.UseHttpsRedirection();
+//app.UseHttpsRedirection();
 
 app.UseAuthorization();
 

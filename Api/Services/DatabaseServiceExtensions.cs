@@ -1,5 +1,7 @@
 ﻿using Api.Data;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
 using Models;
 using Services;
 
@@ -17,9 +19,12 @@ namespace Api.Services
             }
             else
             {
+                var connectionString = config.GetConnectionString("DefaultConnection");
+                Console.WriteLine($"Attempting to connect to MySQL with connection string: {connectionString}");
+
                 services.AddDbContext<DatabaseContext>(options =>
-                    options.UseMySql(config.GetConnectionString("DefaultConnection"),
-                    ServerVersion.AutoDetect(config.GetConnectionString("DefaultConnection"))));
+                    options.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString))
+                           .LogTo(Console.WriteLine, LogLevel.Information)); // Logging to console for debugging
 
                 services.AddScoped<IRecipeService, RecipeService>();
             }

@@ -13,7 +13,7 @@ namespace Models
         public Guid IngredientId { get; set; }
 
         [Required]
-        [StringLength(100)]
+        [StringLength(255)]
         public string Name { get; set; }
 
         [Required]

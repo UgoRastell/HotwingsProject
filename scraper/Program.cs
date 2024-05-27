@@ -30,10 +30,10 @@ class Program
 
         // Écrire toutes les recettes dans un fichier JSON sans filtrer les doublons
         var initialJson = JsonSerializer.Serialize(allRecipes);
-        await File.WriteAllTextAsync("C:/Users/ugora/source/repos/Hotwings/scraper/data.json", initialJson);
+        await File.WriteAllTextAsync("C:/Users/ugora/source/repos/UgoRastell/HotwingsProject/scraper/data.json", initialJson);
 
         // Lire le fichier JSON
-        var jsonData = await File.ReadAllTextAsync("C:/Users/ugora/source/repos/Hotwings/scraper/data.json");
+        var jsonData = await File.ReadAllTextAsync("C:/Users/ugora/source/repos/UgoRastell/HotwingsProject/scraper/data.json");
         var deserializedRecipes = JsonSerializer.Deserialize<List<Recipe>>(jsonData); // Renommé 'recipes' en 'deserializedRecipes'
 
         // Filtrer les doublons
@@ -41,7 +41,7 @@ class Program
 
         // Réécrire les données filtrées dans le fichier JSON
         var filteredJson = JsonSerializer.Serialize(uniqueRecipes);
-        await File.WriteAllTextAsync("C:/Users/ugora/source/repos/Hotwings/scraper/data.json", filteredJson);
+        await File.WriteAllTextAsync("C:/Users/ugora/source/repos/UgoRastell/HotwingsProject/scraper/data.json", filteredJson);
         Console.WriteLine($"Saved {uniqueRecipes.Count} unique recipes to data.json");
     }
 

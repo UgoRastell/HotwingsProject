@@ -1,31 +1,24 @@
-# Etape de base pour le runtime
+# Use the official ASP.NET Core runtime as a parent image
 FROM mcr.microsoft.com/dotnet/aspnet:8.0 AS base
 WORKDIR /app
 EXPOSE 80
 
-# Etape de build pour le SDK
+# Use the SDK image to build the application
 FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
-ARG BUILD_CONFIGURATION=Release
 WORKDIR /src
 COPY ["Api/Api.csproj", "Api/"]
 COPY ["Models/Models.csproj", "Models/"]
-RUN dotnet restore "./Api/Api.csproj"
+RUN dotnet restore "Api/Api.csproj"
 COPY . .
-
-# Installer dotnet-ef globalement
-RUN dotnet tool install --global dotnet-ef
-ENV PATH="${PATH}:/root/.dotnet/tools"
-
 WORKDIR "/src/Api"
-RUN dotnet build "./Api.csproj" -c $BUILD_CONFIGURATION -o /app/build
+RUN dotnet build "Api.csproj" -c Release -o /app/build
 
-# Etape de publication
+# Publish the application
 FROM build AS publish
-ARG BUILD_CONFIGURATION=Release
-RUN dotnet publish "./Api.csproj" -c $BUILD_CONFIGURATION -o /app/publish /p:UseAppHost=false
+RUN dotnet publish "Api.csproj" -c Release -o /app/publish
 
-# Etape finale pour exécuter les migrations
+# Use the base image to run the application
 FROM base AS final
 WORKDIR /app
 COPY --from=publish /app/publish .
-ENTRYPOINT ["dotnet-ef", "database", "update"]
+ENTRYPOINT ["dotnet", "Api.dll"]

@@ -10,10 +10,4 @@
     <PackageReference Include="MongoDB.Bson" Version="2.25.0" />
   </ItemGroup>
 
-  <ItemGroup>
-    <None Update=".dockerignore">
-      <Generator>SettingsSingleFileGenerator</Generator>
-    </None>
-  </ItemGroup>
-
 </Project>
